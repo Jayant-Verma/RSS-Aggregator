@@ -8,11 +8,14 @@ import (
 
 	"github.com/Jayant-Verma/rssagg/internal/database"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
-		Name string `json:"name"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		Password string `json:"password"`
 	}
 	decoder := json.NewDecoder(r.Body)
 
@@ -23,11 +26,24 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	if params.Name == "" || params.Email == "" || params.Password == "" {
+		respondWithError(w, http.StatusBadRequest, "All fields (name, email, password) are required")
+		return
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.DefaultCost)
+	if err != nil {
+		respondWithError(w, 500, "Failed to hash password")
+		return
+	}
+
 	user, err := apiCfg.DB.CreateUser(r.Context(), database.CreateUserParams{
-		ID:        uuid.New(),
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
-		Name:      params.Name,
+		ID:           uuid.New(),
+		CreatedAt:    time.Now().UTC(),
+		UpdatedAt:    time.Now().UTC(),
+		Name:         params.Name,
+		Email:        params.Email,
+		PasswordHash: string(hashedPassword),
 	})
 	if err != nil {
 		respondWithError(w, 500, fmt.Sprintf("Failed to create user: %v", err))
