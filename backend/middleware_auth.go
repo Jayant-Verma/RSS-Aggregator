@@ -25,16 +25,6 @@ func init() {
 	jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 }
 
-func validateJWT(tokenString string) (*jwt.Token, error) {
-
-	return jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return jwtSecret, nil
-	})
-}
-
 func (apiCfg *apiConfig) middlewareAuth(handler authHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Get Authorization header

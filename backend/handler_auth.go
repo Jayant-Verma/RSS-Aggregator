@@ -93,5 +93,15 @@ func (apiCfg *apiConfig) handlerLoginUser(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Path:     "/",                                // ✅ Cookie available on all routes
+		Expires:  time.Now().Add(7 * 24 * time.Hour), // Expires in 7 days
+		HttpOnly: true,                               // ✅ Middleware can read it
+		Secure:   false,                              // ✅ Set to `true` in production (for HTTPS)
+		SameSite: http.SameSiteLaxMode,               // Helps with security
+	})
+
 	respondWithJSON(w, http.StatusOK, map[string]string{"token": token})
 }
