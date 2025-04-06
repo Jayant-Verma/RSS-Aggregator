@@ -16,14 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FollowedFeed } from "@/types/followed_feeds";
 import { Feed } from "@/types/feeds";
-
-interface Post {
-  id: string;
-  title: string;
-  url: string;
-  feed_id: string;
-  published_at: string;
-}
+import { Post } from "@/types/posts";
 
 export default function Dashboard() {
   const [feeds, setFeeds] = useState<Feed[]>([]);
@@ -66,13 +59,13 @@ export default function Dashboard() {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-6 space-y-6">
-      <h1 className="text-3xl font-bold text-indigo-600">Dashboard</h1>
+      <h1 className="text-3xl font-bold text-teal-600">Dashboard</h1>
 
       {/* Stats Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardContent className="flex items-center gap-4 p-6">
-            <Rss className="text-indigo-600" />
+            <Rss className="text-teal-600" />
             <div>
               <p className="text-sm text-muted-foreground">Feeds Followed</p>
               <p className="text-lg font-semibold">{feeds.length}</p>
@@ -81,7 +74,7 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardContent className="flex items-center gap-4 p-6">
-            <Bookmark className="text-indigo-600" />
+            <Bookmark className="text-teal-600" />
             <div>
               <p className="text-sm text-muted-foreground">Saved Posts</p>
               <p className="text-lg font-semibold">{posts.length}</p>
@@ -90,12 +83,12 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardContent className="flex items-center gap-4 p-6">
-            <Settings className="text-indigo-600" />
+            <Settings className="text-teal-600" />
             <div>
               <p className="text-sm text-muted-foreground">Quick Settings</p>
               <Link
                 href="/settings"
-                className="text-indigo-600 text-sm hover:underline"
+                className="text-teal-600 text-sm hover:underline"
               >
                 Manage →
               </Link>
@@ -127,7 +120,7 @@ export default function Dashboard() {
               .map((feed) => (
                 <Card key={feed.id}>
                   <CardContent className="p-5">
-                    <h3 className="font-semibold text-indigo-700">
+                    <h3 className="font-semibold text-teal-700">
                       {feed.name}
                     </h3>
                     <p className="text-xs text-muted-foreground mb-1 break-all">
@@ -151,7 +144,7 @@ export default function Dashboard() {
         <Link href="/feeds">
           <Card className="hover:shadow-md transition">
             <CardContent className="p-4 flex items-center gap-3">
-              <PlusCircle className="text-indigo-600" />
+              <PlusCircle className="text-teal-600" />
               <span>Explore Feeds</span>
             </CardContent>
           </Card>
@@ -159,7 +152,7 @@ export default function Dashboard() {
         <Link href="/my-feeds">
           <Card className="hover:shadow-md transition">
             <CardContent className="p-4 flex items-center gap-3">
-              <Rss className="text-indigo-600" />
+              <Rss className="text-teal-600" />
               <span>My Feeds</span>
             </CardContent>
           </Card>
@@ -167,7 +160,7 @@ export default function Dashboard() {
         <Link href="/posts">
           <Card className="hover:shadow-md transition">
             <CardContent className="p-4 flex items-center gap-3">
-              <Bookmark className="text-indigo-600" />
+              <Bookmark className="text-teal-600" />
               <span>Saved Posts</span>
             </CardContent>
           </Card>
@@ -175,7 +168,7 @@ export default function Dashboard() {
         <Link href="/settings">
           <Card className="hover:shadow-md transition">
             <CardContent className="p-4 flex items-center gap-3">
-              <Settings className="text-indigo-600" />
+              <Settings className="text-teal-600" />
               <span>Settings</span>
             </CardContent>
           </Card>

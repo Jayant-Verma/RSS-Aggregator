@@ -50,7 +50,7 @@ export default function SavedPage() {
     return (
         <div className="w-full max-w-5xl mx-auto px-4 py-6">
             {/* <div className="mb-6">
-                <h1 className="text-2xl font-bold text-indigo-600">Saved Posts</h1>
+                <h1 className="text-2xl font-bold text-teal-600">Saved Posts</h1>
                 <p className="text-sm text-muted-foreground">Explore your saved content below.</p>
             </div> */}
 
@@ -83,7 +83,7 @@ export default function SavedPage() {
                             <Card key={post.id} className="hover:shadow-md transition-shadow">
                                 <CardContent className="p-4">
                                     <div className="flex justify-between items-center">
-                                        <h2 className="text-lg font-semibold text-indigo-700 line-clamp-2">
+                                        <h2 className="text-lg font-semibold text-teal-700 line-clamp-2">
                                             <a href={post.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                                 {post.title}
                                             </a>
