@@ -3,4 +3,4 @@ rssagg
 
 *.env
 
-/vendor/
+*/vendor/
