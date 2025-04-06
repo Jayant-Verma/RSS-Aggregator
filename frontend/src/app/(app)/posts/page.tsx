@@ -9,6 +9,7 @@ import { Post } from "@/types/posts";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Feed } from "@/types/feeds";
+import { Badge } from "@/components/ui/badge";
 
 export default function SavedPage() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -88,13 +89,23 @@ export default function SavedPage() {
                                                 {post.title}
                                             </a>
                                         </h2>
-                                        {/* <Badge variant="outline" className="ml-4 whitespace-nowrap">{post.title}</Badge> */}
+                                        <Badge variant="outline" className="ml-4 whitespace-nowrap">{getFeedName(post?.feed_id)}</Badge>
                                     </div>
                                     <p
                                         className="text-sm text-gray-600 mt-2 line-clamp-3"
                                         dangerouslySetInnerHTML={{ __html: post.description }}
                                     />
-                                    <div className="text-xs text-muted-foreground mt-3">Published: {new Date(post.published_at).toLocaleString()}</div>
+                                    <div className="text-xs text-muted-foreground mt-3">
+                                        Published: {new Date(post.published_at).toLocaleString("en-IN", {
+                                            timeZone: "Asia/Kolkata",
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "2-digit",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            hour12: true,
+                                        })}
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))

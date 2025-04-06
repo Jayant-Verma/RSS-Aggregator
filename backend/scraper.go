@@ -100,7 +100,7 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed) {
 			UpdatedAt:   time.Now().UTC(),
 			Title:       item.Title,
 			Description: description,
-			PublishedAt: pubAt,
+			PublishedAt: pubAt.UTC(),
 			Url:         item.Link,
 			FeedID:      feed.ID,
 		})
