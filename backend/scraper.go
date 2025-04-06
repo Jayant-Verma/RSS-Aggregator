@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"strings"
 	"sync"
@@ -40,6 +41,31 @@ func startScrapping(
 	}
 }
 
+func parseTime(value string) (time.Time, error) {
+	formats := []string{
+		time.RFC1123Z,
+		time.RFC1123,
+		time.RFC822Z,
+		time.RFC822,
+		time.RFC850,
+		time.RFC3339,
+		"Mon, 02 Jan 2006 15:04:05 MST",
+		"02 Jan 2006 15:04:05 MST",
+		"02 Jan 2006 15:04:05 -0700",
+	}
+
+	var parsed time.Time
+	var err error
+
+	for _, format := range formats {
+		parsed, err = time.Parse(format, value)
+		if err == nil {
+			return parsed, nil
+		}
+	}
+	return time.Time{}, fmt.Errorf("could not parse time: %q, last error: %v", value, err)
+}
+
 func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed) {
 	defer wg.Done()
 
@@ -62,7 +88,7 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feed database.Feed) {
 			description.Valid = true
 		}
 
-		pubAt, err := time.Parse(time.RFC1123Z, item.PubDate)
+		pubAt, err := parseTime(item.PubDate)
 		if err != nil {
 			log.Printf("Failed to parse time: %v", err)
 			continue

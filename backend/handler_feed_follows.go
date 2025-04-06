@@ -58,7 +58,7 @@ func (apiCfg *apiConfig) handlerDeleteFeedFollow(w http.ResponseWriter, r *http.
 	}
 
 	err = apiCfg.DB.DeleteFeedFollow(r.Context(), database.DeleteFeedFollowParams{
-		ID:     feedFollowID,
+		FeedID: feedFollowID,
 		UserID: user.ID,
 	})
 	if err != nil {
@@ -66,5 +66,7 @@ func (apiCfg *apiConfig) handlerDeleteFeedFollow(w http.ResponseWriter, r *http.
 		return
 	}
 
-	respondWithJSON(w, 200, struct{}{})
+	respondWithJSON(w, 200, map[string]string{
+		"message": "Feed follow deleted successfully",
+	})
 }
