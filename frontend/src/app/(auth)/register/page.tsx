@@ -105,7 +105,7 @@ export default function RegisterPage() {
                             <Input
                                 name="name"
                                 placeholder="Your name"
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
@@ -114,7 +114,7 @@ export default function RegisterPage() {
                                 name="email"
                                 type="email"
                                 placeholder="Email"
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -123,7 +123,7 @@ export default function RegisterPage() {
                                 name="password"
                                 type="password"
                                 placeholder="Password"
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
@@ -132,18 +132,18 @@ export default function RegisterPage() {
                                 name="confirmPassword"
                                 type="password"
                                 placeholder="Confirm Password"
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
                             />
-                            <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white" disabled={loading}>
+                            <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white" disabled={loading}>
                                 {loading ? "Creating..." : "Register"}
                             </Button>
                         </form>
                         <p className="text-sm text-center text-white/80 mt-4">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-white underline hover:text-indigo-200">
+                            <Link href="/login" className="text-white underline hover:text-teal-200">
                                 Login
                             </Link>
                         </p>

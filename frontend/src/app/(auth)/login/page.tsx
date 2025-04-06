@@ -77,7 +77,7 @@ export default function LoginPage() {
                                 type="email"
                                 placeholder="you@example.com"
                                 value={email}
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 onChange={(e) => setEmail(e.target.value)}
                                 />
                         </div>
@@ -86,13 +86,13 @@ export default function LoginPage() {
                             <Input
                                 type="password"
                                 placeholder="••••••••"
-                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-indigo-600"
+                                className="text-white placeholder:text-white/50 bg-transparent border-b-2 border-white focus:outline-none focus:ring-0 focus:border-teal-600"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <Button
-                            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                            className="w-full bg-teal-600 hover:bg-teal-700 text-white"
                             onClick={handleSubmit}
                             disabled={loading}
                         >
@@ -100,7 +100,7 @@ export default function LoginPage() {
                         </Button>
                         <p className="text-sm text-center text-white/80">
                             Don’t have an account?{' '}
-                            <Link href="/register" className="text-white underline hover:text-indigo-200">
+                            <Link href="/register" className="text-white underline hover:text-teal-200">
                                 Register
                             </Link>
                         </p>

@@ -101,7 +101,7 @@ export default function FeedsPage() {
         <div className="w-full max-w-5xl mx-auto px-4 py-6 space-y-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-indigo-600">Feeds</h1>
+                    <h1 className="text-2xl font-bold text-teal-600">Feeds</h1>
                     <p className="text-sm text-gray-500">Manage your feeds and follow/unfollow them.</p>
                 </div>
 
@@ -161,7 +161,7 @@ export default function FeedsPage() {
 
             {loading ? (
                 <div className="flex justify-center py-20">
-                    <Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+                    <Loader2 className="h-6 w-6 animate-spin text-teal-600" />
                 </div>
             ) : filteredFeeds.length === 0 ? (
                 <div className="text-center text-gray-500 py-10">No feeds found.</div>
@@ -171,7 +171,7 @@ export default function FeedsPage() {
                         <Card key={feed.id} className="hover:shadow-md transition-shadow">
                             <CardContent className="p-4 space-y-2">
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-lg font-semibold text-indigo-700 truncate">
+                                    <h2 className="text-lg font-semibold text-teal-700 truncate">
                                         {feed.name}
                                     </h2>
                                     {followedFeedIds.has(feed.id) && (
@@ -184,7 +184,7 @@ export default function FeedsPage() {
                                 <a
                                     href={feed.url}
                                     target="_blank"
-                                    className="text-sm text-indigo-600 hover:underline"
+                                    className="text-sm text-teal-600 hover:underline"
                                 >
                                     Visit Feed
                                 </a>
