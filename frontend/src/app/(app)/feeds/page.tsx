@@ -25,14 +25,15 @@ export default function FeedsPage() {
         name: "",
         url: "",
     });
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
     useEffect(() => {
         const fetchFeeds = async () => {
             try {
                 const token = Cookies.get("authToken");
                 const [allFeeds, followed] = await Promise.all([
-                    axios.get("http://localhost:8080/v1/feeds"),
-                    axios.get("http://localhost:8080/v1/feed_follows", { headers: { Authorization: `Bearer ${token}` } }),
+                    axios.get(`${apiUrl}/v1/feeds`),
+                    axios.get(`${apiUrl}/v1/feed_follows`, { headers: { Authorization: `Bearer ${token}` } }),
                 ]);
 
                 setFeeds(allFeeds.data);
@@ -51,7 +52,7 @@ export default function FeedsPage() {
         const token = Cookies.get("authToken");
         try {
             if (followedFeedIds.has(feedId)) {
-                await axios.delete(`http://localhost:8080/v1/feed_follows/${feedId}`, {
+                await axios.delete(`${apiUrl}/v1/feed_follows/${feedId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setFollowedFeedIds((prev) => {
@@ -61,7 +62,7 @@ export default function FeedsPage() {
                 });
             } else {
                 await axios.post(
-                    `http://localhost:8080/v1/feed_follows`,
+                    `${apiUrl}/v1/feed_follows`,
                     { feed_id: feedId },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -77,7 +78,7 @@ export default function FeedsPage() {
         const token = Cookies.get("authToken");
         try {
             const res = await axios.post(
-                "http://localhost:8080/v1/feeds",
+                `${apiUrl}/v1/feeds`,
                 { name: newFeedData.name, url: newFeedData.url },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

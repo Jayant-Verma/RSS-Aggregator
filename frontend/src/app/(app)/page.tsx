@@ -23,16 +23,17 @@ export default function Dashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const token = Cookies.get("authToken");
+  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [feedsRes, followsRes, postsRes] = await Promise.all([
-          axios.get("http://localhost:8080/v1/feeds"),
-          axios.get("http://localhost:8080/v1/feed_follows", {
+          axios.get(`${apiUrl}/v1/feeds`),
+          axios.get(`${apiUrl}/v1/feed_follows`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/v1/posts", {
+          axios.get(`${apiUrl}/v1/posts`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -124,7 +125,7 @@ export default function Dashboard() {
                       {feed.name}
                     </h3>
                     <p className="text-xs text-muted-foreground mb-1 break-all">
-                      {feed.description}
+                      {feed.url}
                     </p>
                     <p className="text-xs text-gray-500">
                       Updated{" "}

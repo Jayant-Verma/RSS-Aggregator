@@ -16,13 +16,14 @@ export default function SavedPage() {
     const [feeds, setFeeds] = useState<Feed[]>([]);
     const [search, setSearch] = useState("");
     const [selectedFeed, setSelectedFeed] = useState<string>("all");
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
     useEffect(() => {
         const fetchData = async () => {
             const token = Cookies.get("authToken");
             const [postsRes, feedsRes] = await Promise.all([
-                axios.get("http://localhost:8080/v1/posts", { headers: { Authorization: `Bearer ${token}` } }),
-                axios.get("http://localhost:8080/v1/feeds"),
+                axios.get(`${apiUrl}/v1/posts`, { headers: { Authorization: `Bearer ${token}` } }),
+                axios.get(`${apiUrl}/v1/feeds`),
             ]);
             setPosts(postsRes?.data);
             // filters feeds to only those that have posts

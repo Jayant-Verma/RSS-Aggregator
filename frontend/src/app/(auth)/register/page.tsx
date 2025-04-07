@@ -19,6 +19,7 @@ export default function RegisterPage() {
         confirmPassword: "",
     });
     const [loading, setLoading] = useState(false);
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,7 +63,7 @@ export default function RegisterPage() {
 
         setLoading(true);
         try {
-            await axios.post("http://localhost:8080/v1/auth/register", {
+            await axios.post(`${apiUrl}/v1/auth/register`, {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,

@@ -16,12 +16,13 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:8080/v1/auth/login", {
+            const response = await axios.post(`${apiUrl}/v1/auth/login`, {
                 email,
                 password,
             });
