@@ -30,6 +30,7 @@ export default function Navbar() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
     const { theme, setTheme } = useTheme();
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
     const handleLogout = () => {
         Cookies.remove("authToken");
@@ -44,7 +45,7 @@ export default function Navbar() {
             if (!token) return;
 
             try {
-                const response = await axios.get("http://localhost:8080/v1/user/me", {
+                const response = await axios.get(`${apiUrl}/v1/user/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
