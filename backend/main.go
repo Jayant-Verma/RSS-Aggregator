@@ -38,6 +38,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	conn.SetMaxOpenConns(5)
+	conn.SetMaxIdleConns(2)
+	conn.SetConnMaxLifetime(time.Hour)
+
 	db := database.New(conn)
 	apiCfg := apiConfig{
 		DB: db,
