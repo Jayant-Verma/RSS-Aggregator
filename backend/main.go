@@ -1,16 +1,14 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/jackc/pgx/v5/stdlib"
 
 	"github.com/Jayant-Verma/rssagg/internal/database"
 	"github.com/go-chi/chi"
@@ -23,10 +21,7 @@ type apiConfig struct {
 }
 
 func main() {
-	// Load local .env only in development
-	if os.Getenv("RENDER") != "true" {
-		godotenv.Load("../.env")
-	}
+	godotenv.Load("../.env")
 
 	portString := os.Getenv("PORT")
 	if portString == "" {
@@ -38,27 +33,10 @@ func main() {
 		log.Fatal("DB_URL environment variable not set")
 	}
 
-	// Parse pgx config
-	config, err := pgx.ParseConfig(dbURL)
+	conn, err := sql.Open("pgx", dbURL)
 	if err != nil {
-		log.Fatalf("Failed to parse DB_URL: %v", err)
+		log.Fatal(err)
 	}
-
-	// Force IPv4 DNS resolution
-	dialer := &net.Dialer{
-		Timeout:   5 * time.Second,
-		KeepAlive: 5 * time.Second,
-		Resolver: &net.Resolver{
-			PreferGo: true,
-			Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
-				return net.Dial("tcp4", address)
-			},
-		},
-	}
-
-	config.DialFunc = dialer.DialContext
-
-	conn := stdlib.OpenDB(*config)
 
 	db := database.New(conn)
 	apiCfg := apiConfig{
@@ -100,8 +78,8 @@ func main() {
 	}
 
 	log.Printf("Server listening on port %s", portString)
-	err = srv.ListenAndServe()
-	if err != nil {
+	error := srv.ListenAndServe()
+	if error != nil {
 		log.Fatal(err)
 	}
 }
