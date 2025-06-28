@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,6 +13,9 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/stdlib"
 )
 
 type apiConfig struct {
@@ -33,10 +35,15 @@ func main() {
 		log.Fatal("DB_URL environment variable not set")
 	}
 
-	conn, err := sql.Open("pgx", dbURL)
+	config, err := pgx.ParseConfig(dbURL)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to parse DB_URL:", err)
 	}
+
+	// 🔧 Force simple protocol (no prepared statements)
+	config.DefaultQueryExecMode = pgx.QueryExecModeSimpleProtocol
+
+	conn := stdlib.OpenDB(*config)
 
 	conn.SetMaxOpenConns(5)
 	conn.SetMaxIdleConns(2)
